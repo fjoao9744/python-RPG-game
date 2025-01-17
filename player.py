@@ -1,4 +1,5 @@
 from random import randint
+from items import Item
 import pandas as pd
 
 class PlayerDefinition(type):
@@ -60,6 +61,14 @@ class Player(metaclass = PlayerDefinition):
         
     def atack(self, monster):
         monster.take_damage(self.damage())
+        
+    def item_equip(self, item: Item):
+        self.__hp += item.hp
+        self.atk_min += item.atk
+        self.atk_max += item.atk
+        self.crit += item.crit
+        
+        
 
 
 
