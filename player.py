@@ -1,6 +1,7 @@
-from random import randint
-from items import Item
+import items
 import pandas as pd
+from random import randint
+from collections import deque
 
 class PlayerDefinition(type):
     def __new__(cls, name, bases, dct):
@@ -25,10 +26,14 @@ class Player(metaclass = PlayerDefinition):
         
         self.crit = 8
         
+        self.inventory = deque()
+        self.equippeds = {"weapow": None, "armor": None, "relic": None}
+        
+        
     def status(self):
         status = {
-            "atributos" : ["name", "level", "hp max", "hp", "damage min", "damage max", "crit"],
-            "valores": [self.name, self.level, self.hp_max, self.__hp, self.atk_min, self.atk_max, self.crit]
+            "atributos" : ["name", "level", "hp max", "hp", "damage min", "damage max", "crit", "inventory", "weapow", "armor", "relic"],
+            "valores": [self.name, self.level, self.hp_max, self.__hp, self.atk_min, self.atk_max, self.crit, self.inventory, self.equippeds["weapow"], self.equippeds["armor"], self.equippeds["relic"]]
         }
         
         df = pd.DataFrame(status)
@@ -44,6 +49,7 @@ class Player(metaclass = PlayerDefinition):
     def hp(self):
         return self.__hp
     
+    # Batalha
     def damage(self):
         damage = randint(self.atk_min, self.atk_max)
         
@@ -62,16 +68,46 @@ class Player(metaclass = PlayerDefinition):
     def atack(self, monster):
         monster.take_damage(self.damage())
         
-    def item_equip(self, item: Item):
-        self.__hp += item.hp
-        self.atk_min += item.atk
-        self.atk_max += item.atk
-        self.crit += item.crit
+    # Inventario
+    def add_item(self, item: items.Item):
+        self.inventory.appendleft(item)
+    
+    def remove_item(self, item: items.Item):
+        self.inventory.remove(item)
+    
+    def item_equip(self, item: items.Item):
+        if item in self.inventory:
+            self.__hp += item.hp
+            self.atk_min += item.atk
+            self.atk_max += item.atk
+            self.crit += item.crit
+            
+            if item in self.equippeds.values():
+                return "The item is equipped"
+            
+            if isinstance(item, items.Weapow):
+                self.equippeds["weapow"] = item
+                
+            elif isinstance(item, items.Armor):
+                self.equippeds["armor"] = item
+                
+            elif isinstance(item, items.Relic):
+                self.equippeds["relic"] = item
         
-        
+    def item_desiquip(self, item):
+        if item in self.inventory:
+            self.__hp += item.hp
+            self.atk_min += item.atk
+            self.atk_max += item.atk
+            self.crit += item.crit
 
 
 
 joao = Player("joao")
 
 joao.status()
+joao.add_item(items.espada1)
+joao.status()
+joao.item_equip(items.espada1)
+joao.status()
+
