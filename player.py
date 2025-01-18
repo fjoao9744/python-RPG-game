@@ -29,7 +29,6 @@ class Player(metaclass = PlayerDefinition):
         self.inventory = deque()
         self.equippeds = {"weapow": None, "armor": None, "relic": None}
         
-        
     def status(self):
         status = {
             "atributos" : ["name", "level", "hp max", "hp", "damage min", "damage max", "crit", "inventory", "weapow", "armor", "relic"],
@@ -40,7 +39,7 @@ class Player(metaclass = PlayerDefinition):
         
         print(df.to_string(index=False))
         
-    # Decorador property para evitar um setter
+    # Decorator to avoid a setter
     @property
     def hp_max(self):
         return self.__hp_max
@@ -49,7 +48,7 @@ class Player(metaclass = PlayerDefinition):
     def hp(self):
         return self.__hp
     
-    # Batalha
+    # Battle
     def damage(self):
         damage = randint(self.atk_min, self.atk_max)
         
@@ -68,7 +67,7 @@ class Player(metaclass = PlayerDefinition):
     def atack(self, monster):
         monster.take_damage(self.damage())
         
-    # Inventario
+    # Inventory
     def add_item(self, item: items.Item):
         self.inventory.appendleft(item)
     
@@ -86,28 +85,39 @@ class Player(metaclass = PlayerDefinition):
                 return "The item is equipped"
             
             if isinstance(item, items.Weapow):
-                self.equippeds["weapow"] = item
+                self.equippeds["weapow"] = item # type: ignore
                 
             elif isinstance(item, items.Armor):
-                self.equippeds["armor"] = item
+                self.equippeds["armor"] = item # type: ignore
                 
             elif isinstance(item, items.Relic):
-                self.equippeds["relic"] = item
+                self.equippeds["relic"] = item # type: ignore
         
     def item_desiquip(self, item):
-        if item in self.inventory:
-            self.__hp += item.hp
-            self.atk_min += item.atk
-            self.atk_max += item.atk
-            self.crit += item.crit
-
-
+        if item in self.equippeds.values():
+            self.__hp -= item.hp
+            self.atk_min -= item.atk
+            self.atk_max -= item.atk
+            self.crit -= item.crit
+            
+            if isinstance(item, items.Weapow):
+                self.equippeds["weapow"] = None
+                
+            elif isinstance(item, items.Armor):
+                self.equippeds["armor"] = None
+                
+            elif isinstance(item, items.Relic):
+                self.equippeds["relic"] = None
+            
+        else: print("This item not equipped")
 
 joao = Player("joao")
 
 joao.status()
 joao.add_item(items.espada1)
 joao.status()
+
+
 joao.item_equip(items.espada1)
 joao.status()
 

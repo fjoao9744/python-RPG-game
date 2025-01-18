@@ -6,6 +6,24 @@ class World:
         
         
     
-        
-        
+"""
+-> parts of the project
+player =
+monsters =
+items ==
+damage functions(for monsters and player) ✅
+inventory sistem ===
+battle sistem
+world sistem and ARG(Artificial Random Generation)
+
+save and load system(automatic if possible)
+terminal decoration libs(Curses or InquererPy)
+party sistem
+npcs
+dialogs
+loot boxes(chests)
+
+
+"""
+
 
