@@ -2,7 +2,7 @@ class MonsterType(type):
     def __new__(cls, name, bases, dct):
         
         def __init__(self):
-            return f"O objeto \"{name}\" é um monstro"
+            return f"The object \"{name}\" is monster"
         
         dct["__init__"] = __init__
         
@@ -15,9 +15,15 @@ class Slime(metaclass = MonsterType):
         self.nome = nome
         if 1 <= level <= 20:
             self.level = level
-            
         else:
             raise self.__class__.MonsterCreationError("O level do monstro deve ser entre 1 e 20")
+        
+        self.exp = 0
+        self.atk_min = 2 * level
+        self.atk_max = 3 * level
+        
+    
+            
         
         
     

@@ -18,11 +18,14 @@ class Player(metaclass = PlayerDefinition):
         self.name = name
         self.level = 1
         
+        self.exp = 0
+        
         self.__hp_max = 20
         self.__hp = 20
         
         self.atk_min = 2
         self.atk_max = 6
+         
         
         self.crit = 8
         
@@ -39,6 +42,19 @@ class Player(metaclass = PlayerDefinition):
         
         print(df.to_string(index=False))
         
+    def level_up(self):
+        if self.level < 20:
+            self.level += 1
+            
+            self.__hp_max += self.__hp_max // 3
+            
+            self.atk_min += self.atk_min // 2
+            self.atk_max += int(self.atk_max // 2.25)
+            
+            self.crit = self.atk_min + self.atk_max
+            
+            self.heal(self.__hp_max // 4)
+            
     # Decorator to avoid a setter
     @property
     def hp_max(self):
@@ -113,11 +129,14 @@ class Player(metaclass = PlayerDefinition):
 
 joao = Player("joao")
 
-joao.status()
+"""joao.status()
 joao.add_item(items.espada1)
 joao.status()
 
 
 joao.item_equip(items.espada1)
-joao.status()
+joao.status()"""
 
+for c in range(20):
+    joao.status()
+    joao.level_up()
