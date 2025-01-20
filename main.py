@@ -14,6 +14,7 @@ monsters =
 items ==
 damage functions(for monsters and player) ✅
 inventory sistem ===
+multi atacks choice system(monsters and player)
 battle sistem
 world sistem and ARG(Artificial Random Generation)
 

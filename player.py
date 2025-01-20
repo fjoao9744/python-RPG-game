@@ -137,6 +137,6 @@ joao.status()
 joao.item_equip(items.espada1)
 joao.status()"""
 
-for c in range(20):
+"""for c in range(20):
     joao.status()
-    joao.level_up()
+    joao.level_up()"""
