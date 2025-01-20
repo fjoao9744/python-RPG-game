@@ -1,6 +1,7 @@
 import items
 import pandas as pd
 from random import randint
+from sys import stdout
 from collections import deque
 
 class PlayerDefinition(type):
@@ -14,34 +15,55 @@ class PlayerDefinition(type):
         return super().__new__(cls, name, bases, dct)
 
 class Player(metaclass = PlayerDefinition):
+    """
+    -> Create player for game
+    methods:
+    # Basic methods
+        status(): Display all player attributes
+        level_up(): Increase player attributes
+        exp_owner(exp): Increase exp attribute, if exp is high the player level up
+        
+    # Battle methods
+        damage(): Return player damage # Not use
+        take_damage(damage): Receive the damage
+        heal(hp): Restore hp
+        atack(monster): Decreases monster hp 
+    
+    # Invetory methods
+        add_item(item): Add item to inventory
+        remove_item(item): Remove item to inventory(if the item is there)
+        item_equip(item): Equip item(receive attributes extras)
+        item_desiquip(item): Desiquip item
+        
+    """
     def __init__(self, name):
         self.name = name
         self.level = 1
         
-        self.exp = 0
+        self.exp = self.Exp(self)
         
         self.__hp_max = 20
         self.__hp = 20
         
         self.atk_min = 2
         self.atk_max = 6
-         
         
         self.crit = 8
         
         self.inventory = deque()
         self.equippeds = {"weapow": None, "armor": None, "relic": None}
-        
+    
+    # basic methods
     def status(self):
         status = {
-            "atributos" : ["name", "level", "hp max", "hp", "damage min", "damage max", "crit", "inventory", "weapow", "armor", "relic"],
-            "valores": [self.name, self.level, self.hp_max, self.__hp, self.atk_min, self.atk_max, self.crit, self.inventory, self.equippeds["weapow"], self.equippeds["armor"], self.equippeds["relic"]]
+            "atributos" : ["name", "level", "exp", "hp max", "hp", "damage min", "damage max", "crit", "inventory", "weapow", "armor", "relic"],
+            "valores": [self.name, self.level, self.exp.exp, self.hp_max, self.__hp, self.atk_min, self.atk_max, self.crit, self.inventory, self.equippeds["weapow"], self.equippeds["armor"], self.equippeds["relic"]]
         }
         
         df = pd.DataFrame(status)
         
-        print(df.to_string(index=False))
-        
+        stdout.write(df.to_string(index=False))
+    
     def level_up(self):
         if self.level < 20:
             self.level += 1
@@ -54,7 +76,40 @@ class Player(metaclass = PlayerDefinition):
             self.crit = self.atk_min + self.atk_max
             
             self.heal(self.__hp_max // 4)
+            next(self.exp)
+    
+    # exp system
+    def exp_owner(self, exp):
+        self.exp.add(exp)
+        
+        if self.exp.exp >= self.exp.exp_required:
+            self.level_up()
             
+    class Exp:
+        def __init__(self, player):
+            self.player = player
+            self.exp = 0
+            self.can_gain_exp = True
+            self.exp_generator = self.exp_required_setter()
+            self.exp_required = next(self.exp_generator)
+            
+        def exp_required_setter(self):
+            self.exp_required = 50
+            while self.can_gain_exp:
+                if not self.player.level < 20:
+                    self.can_gain_exp = False
+                    yield
+                    
+                yield self.exp_required * 2
+                        
+        def add(self, exp):
+            if self.can_gain_exp:
+                self.exp += exp
+                return self.exp
+            
+        def __next__(self):
+            self.exp_required = next(self.exp_generator)
+    
     # Decorator to avoid a setter
     @property
     def hp_max(self):
@@ -127,16 +182,7 @@ class Player(metaclass = PlayerDefinition):
             
         else: print("This item not equipped")
 
+
+
 joao = Player("joao")
 
-"""joao.status()
-joao.add_item(items.espada1)
-joao.status()
-
-
-joao.item_equip(items.espada1)
-joao.status()"""
-
-"""for c in range(20):
-    joao.status()
-    joao.level_up()"""

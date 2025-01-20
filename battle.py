@@ -10,13 +10,17 @@ class Battle:
         turn = 1
         fighting = True
         
+        # bad code ⚠
         while fighting:
-            if not self.monster.hp <= 0: # type: ignore
+            if not self.player.hp <= 0: # type: ignore
                 self.player.atack(self.monster)
+            else:
+                fighting = False
                 
-            if not self.player.hp <= 0: 
+            if not self.monster.hp <= 0: # type:ignore
                 self.monster.atack(self.player) # type:ignore
-                
+            else:
+                fighting = False
             turn += 1
             
             yield
