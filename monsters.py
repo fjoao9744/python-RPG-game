@@ -16,17 +16,17 @@ class Monster(metaclass = MonsterType):
     class MonsterCreationError(Exception): pass
     
     def take_damage(self, damage):
-        self.__hp -= damage
-        if self.__hp < 0:
-            self.__hp = 0
+        self.hp -= damage
+        if self.hp < 0:
+            self.hp = 0
         
     @abstractmethod
     def atack(self):
         pass
         
 class Slime(Monster):
-    def __init__(self, nome="Slime", level=1):
-        self.nome = nome
+    def __init__(self, name="Slime", level=1):
+        self.name = name
         if 1 <= level <= 20:
             self.level = level
         else:
@@ -51,6 +51,10 @@ class Slime(Monster):
     def atack(self, player: Player):
         damage = self.damage()
         player.take_damage(damage)
+        print(f"{self.name} atacou {player.name}, deu {damage} de dano")
+        print(f"{self.name} esta com {self.hp} de hp")
+        
+        
         
     def damage(self):
         return randint(self.atk_min, self.atk_max)

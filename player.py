@@ -136,7 +136,11 @@ class Player(metaclass = PlayerDefinition):
             self.__hp = self.__hp_max
         
     def atack(self, monster):
-        monster.take_damage(self.damage())
+        damage = self.damage()
+        monster.take_damage(damage)
+        print(f"{self.name} atacou {monster.name}, deu {damage} de dano")
+        print(f"{self.name} esta com {self.hp} de hp")
+        
         
     # Inventory
     def add_item(self, item: items.Item):

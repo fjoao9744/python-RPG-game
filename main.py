@@ -9,8 +9,9 @@ class World:
 """
 -> parts of the project
 player =
-(exp, inventory, level up)
+(exp✅, inventory== and level up✅)
 monsters =
+(exp, drop items, level up and dead)
 items ==
 damage functions(for monsters and player) ✅
 inventory sistem ===
@@ -24,7 +25,6 @@ party sistem
 npcs
 dialogs
 loot boxes(chests)
-
 
 """
 

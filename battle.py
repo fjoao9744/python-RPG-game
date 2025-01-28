@@ -1,8 +1,8 @@
-from monsters import MonsterType, Slime
+from monsters import Monster, Slime
 from player import Player
 
 class Battle:
-    def __init__(self, player: Player, monster: MonsterType):
+    def __init__(self, player: Player, monster: Monster):
         self.player = player
         self.monster = monster
         
@@ -12,8 +12,9 @@ class Battle:
         
         # bad code ⚠
         while fighting:
-            if not self.player.hp <= 0: # type: ignore
+            if not self.player.hp <= 0:
                 self.player.atack(self.monster)
+                
             else:
                 fighting = False
                 
@@ -23,8 +24,14 @@ class Battle:
                 fighting = False
             turn += 1
             
-            yield
+    def __call__(self):
+        self.turn()
 
 joao = Player("joao")
 slime = Slime()
+
+battle = Battle(joao, slime)
+
+battle()
+
 
