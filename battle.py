@@ -24,6 +24,7 @@ class Battle:
                 fighting = False
             turn += 1
             
+            
     def __call__(self):
         self.turn()
 
@@ -33,5 +34,3 @@ slime = Slime()
 battle = Battle(joao, slime)
 
 battle()
-
-

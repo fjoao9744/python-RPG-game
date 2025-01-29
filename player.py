@@ -141,7 +141,6 @@ class Player(metaclass = PlayerDefinition):
         print(f"{self.name} atacou {monster.name}, deu {damage} de dano")
         print(f"{self.name} esta com {self.hp} de hp")
         
-        
     # Inventory
     def add_item(self, item: items.Item):
         self.inventory.appendleft(item)
@@ -168,7 +167,7 @@ class Player(metaclass = PlayerDefinition):
             elif isinstance(item, items.Relic):
                 self.equippeds["relic"] = item # type: ignore
         
-    def item_desiquip(self, item):
+    def item_desiquip(self, item: items.Item):
         if item in self.equippeds.values():
             self.__hp -= item.hp
             self.atk_min -= item.atk

@@ -46,9 +46,10 @@ class Potion(Consumible):
         super().__init__(name, hp, atk, crit)
         
     
-espada1 = Sword("espada longa", atk = 2)
-espada2 = Sword("espada curta", atk = 1)
+sword = Sword("espada longa", atk = 2)
+sword2 = Sword("espada curta", atk = 1)
 
+cure_potion = Potion("cure_potion", hp=20)
 
         
     
