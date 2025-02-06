@@ -54,10 +54,8 @@ class Slime(Monster):
         print(f"{self.name} atacou {player.name}, deu {damage} de dano")
         print(f"{self.name} esta com {self.hp} de hp")
         
-        
-        
     def damage(self):
-        return randint(self.atk_min, self.atk_max)
+        return randint(self.atk_min, self.atk_max)        
     
 
     

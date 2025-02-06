@@ -23,7 +23,28 @@ class Battle:
             else:
                 fighting = False
             turn += 1
+        
+        """
+        def player_dead():
+            player.gameover()
+        
+        def monster_dead():
+            player.killed(monster)
             
+        
+        # in player
+        def killed(monster):
+            monster.drop()
+            self.exp_owner(monster.exp)
+            
+        # in monster
+        def drop():
+            ...
+        
+        
+        
+        
+        """
             
     def __call__(self):
         self.turn()

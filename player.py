@@ -122,8 +122,9 @@ class Player(metaclass = PlayerDefinition):
     # Battle
     def damage(self):
         damage = randint(self.atk_min, self.atk_max)
+        crit = randint(0, 10)
         
-        return damage
+        return damage if crit != 10 else crit
     
     def take_damage(self, damage):
         self.__hp -= damage

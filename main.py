@@ -1,22 +1,7 @@
 from player import Player
-from items import sword, sword2, cure_potion
-class World:
-    def __init__(self):
-        self.fase = 1
 
-p = Player("joao")
+print("welcome to the world of a generic RPG!")
 
-p.add_item(cure_potion)
-p.add_item(cure_potion)
-p.add_item(cure_potion)
-p.add_item(cure_potion)
-p.add_item(cure_potion)
-
-p.status()
-
-p.remove_item(cure_potion)
-
-p.status()
 
 
 """
