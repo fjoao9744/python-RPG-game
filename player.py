@@ -130,7 +130,7 @@ class Player(metaclass = PlayerDefinition):
         self.__hp -= damage
         if self.__hp < 0:
             self.__hp = 0
-        
+
     def heal(self, hp):
         self.__hp += hp
         if self.__hp > self.__hp_max:
@@ -185,7 +185,22 @@ class Player(metaclass = PlayerDefinition):
                 self.equippeds["relic"] = None
             
         else: print("This item not equipped")
-
+        
+    def __gameover(self):
+        exit()
+        
+    def dead(self):
+        print("You dead.")
+        print("Your status: ")
+        self.status()
+        self.__gameover()
+        
+    def killed(self, monster):
+        for item in monster.drops:
+            self.add_item(item)
+        self.exp_owner(monster.exp)
+        
+        monster.dead()
 
 
 joao = Player("joao")

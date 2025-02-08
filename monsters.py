@@ -14,11 +14,19 @@ class MonsterType(ABCMeta, type):
 
 class Monster(metaclass = MonsterType):
     class MonsterCreationError(Exception): pass
+    alive = True
     
     def take_damage(self, damage):
+        if not self.alive:
+            print("monster is dead")
+            return
+        
         self.hp -= damage
         if self.hp < 0:
             self.hp = 0
+    
+    def dead(self):
+        self.alive = False
         
     @abstractmethod
     def atack(self):
@@ -32,11 +40,14 @@ class Slime(Monster):
         else:
             raise self.__class__.MonsterCreationError("O level do monstro deve ser entre 1 e 20")
         
-        self.exp = 0
+        self.exp = 14
         self.hp_max = 15 * level
         self.hp = self.hp_max
         self.atk_min = 2 * level
         self.atk_max = 3 * level
+        
+        self.drops = ["slime part"]
+        
         
     def level_up(self):
         if self.level < 20:
