@@ -3,7 +3,6 @@ from player import Player
 print("welcome to the world of a generic RPG!")
 
 
-
 """
 -> parts of the project
 player =
