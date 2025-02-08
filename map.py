@@ -30,10 +30,13 @@ class Map:
                 row.append([])
             map.append(row)
         
-        
         return map
     
     matrix_map = map_generate()
+    
+    def __next__(self):
+        self.matrix_map = self.map_generate()
+        return self.__str__()
     
     def __str__(self):
         return "\n".join("".join(f"{str(cell):^3}" for cell in row) for row in self.matrix_map) 
@@ -41,4 +44,7 @@ class Map:
 map = Map()
 
 print(map)
+print(next(map))
+print(next(map))
+
 
